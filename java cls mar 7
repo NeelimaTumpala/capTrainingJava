@@ -1,0 +1,20 @@
+package samplejavaproject;
+
+public class StudentResult {
+
+	public static void main(String[] args) {
+		  int regno=12;
+		  int sub1=89;
+		  int sub2=87;
+		  int sub3=98;
+		  int total=sub1+sub2+sb3;
+	      double average=total/3;
+	      if(sub1>=40 && sub2>=40 && sub3>=40)
+	        System.out.println("pass");
+	      else
+	        System.out.println("not pass");
+	      
+
+	}
+
+}
