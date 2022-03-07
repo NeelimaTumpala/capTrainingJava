@@ -435,3 +435,5 @@ class CommandLineArgs {
 
 }
 
+Note : to run in command line follow these steps
+right click on program->run->run configuration->commandlineargs->arguments->write arjun 50 70
