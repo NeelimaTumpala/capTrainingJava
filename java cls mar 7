@@ -1,3 +1,5 @@
+//to check whether passed or not
+
 package samplejavaproject;
 
 public class StudentResult {
@@ -14,6 +16,128 @@ public class StudentResult {
 	      else
 	        System.out.println("not pass");
 	      
+
+	}
+
+}
+
+//using switch
+
+package samplejavaproject;
+
+public class UsingSwitch {
+
+	public static void main(String[] args) {
+		int category=2;
+		int increment;
+		switch(category) {
+		case 1:
+			increment = 40;break;
+		case 2:
+			increment = 30;break;
+		case 3:
+			increment = 25;break;
+		case 4:
+			increment =  50;break;
+			default: 
+				increment =15;
+		}
+		System.out.println(increment);
+
+	}
+
+}
+
+
+//Electricity bill
+
+package samplejavaproject;
+
+public class ElectricityBill {
+
+	public static void main(String[] args) {
+		
+		int service_no=  14;
+		int previous_meter_reading = 350;
+		int presesnt_meter_reading = 700;
+		float units = presesnt_meter_reading-previous_meter_reading;
+		double net_bill=0;
+		int a = 0;
+		if(units<=100) {
+			a=1;
+		}
+		else if(units<=200){
+			a=2;
+		}
+		else {
+			a=3;
+		}
+			
+		
+		switch(a) {
+		case 1:
+			System.out.println("category = A");
+			if(units<=50) {
+				net_bill = (units*1.45)+25;
+				
+			}
+			else {
+				net_bill = (50*1.45)+((units-50)*2.6)+30;
+			}
+			break;
+			
+		case 2:
+			System.out.println("category = B");
+			net_bill = (100*3.30)+((units-100)*4.30)+50;
+			break;
+			
+		case 3:
+			System.out.println("category = C");
+			if(units>=201 && units<=300) {
+				net_bill = (200*5)+((units-200)*7.2)+60;
+			}
+			
+			else if(units>=301 && units<=400) {
+				net_bill = (200*5)+(100*7.2)+((units-300)*8.5)+80;
+			}
+			
+			else if(units>=401 && units<=800) {
+				net_bill = (200*5)+(100*7.2)+(100*8.5)+((units-400)*9)+80;
+			}
+			
+			else if(units>800) {
+				net_bill = (200*5)+(100*7.2)+(100*8.5)+(400*9)+((units-800)*9.5)+80;
+			}
+			break;
+			
+			
+			
+		 default:
+			System.out.println("Invalid");
+			
+		}
+		System.out.print("Service number");
+		System.out.println(service_no);
+		System.out.print("Total number of units = ");
+		System.out.println(units);
+		if(units<=50) {
+			System.out.println("fixed charges = 25");
+			
+		}
+		else if(units>50 && units<=100) {
+			System.out.println("fixed charges = 30");
+		}
+		else if(units>100 && units<=200) {
+			System.out.println("fixed charges = 50");
+		}
+		else if(units>200 && units<=300) {
+			System.out.println("fixed charges = 60");
+		}
+		else if(units>300) {
+			System.out.println("fixed charges = 80");
+		}
+		System.out.print("net_bill = ");
+		System.out.println(net_bill);
 
 	}
 
