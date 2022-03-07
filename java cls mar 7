@@ -396,4 +396,42 @@ public class TestArray {
 //type casting
 
 
+package samplejavaproject;
+
+public class TypeCasting {
+
+	public static void main(String[] args) {
+		byte b=101;
+		int x=b;
+		System.out.println(x);//implicit casting
+		int a=32765;
+		short s=(short) a;//explicit casting
+		System.out.println(s);
+		
+		
+		
+
+	}
+
+}
+
+
+//command line args
+
+package samplejavaproject;
+
+class CommandLineArgs {
+
+	public static void main(String[] args) {
+		String name =args[0];
+		System.out.println(args[1]+args[2]);
+		int sub1 = Integer.parseInt(args[1]);
+		int sub2 = Integer.parseInt(args[2]);
+		int total = sub1+sub2;
+		System.out.println(total)
+		
+
+	}
+
+}
 
