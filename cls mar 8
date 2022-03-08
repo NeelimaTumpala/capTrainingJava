@@ -57,6 +57,172 @@ public class AccoutMain {
 
 }
 
+//Account
+
+package day2;
+
+public class Account {
+	    private int acno;
+		private String name;
+		private double balance;
+		
+		
+		public int getAcno() {
+			return acno;
+		}
+		public void setAcno(int acno) {
+			this.acno = acno;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public double getBalance() {
+			return balance;
+		}
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
+        
+	
+
+}
+
+//AccountMain
+
+package day2;
+
+public class AccoutMain {
+
+	public static void main(String[] args) {
+		
+		Account acn = new Account();
+		acn.setAcno(10);
+		acn.setName("arjun");
+		acn.setBalance(5000);
+		System.out.println(acn.getAcno()+" "+acn.getName()+" "+acn.getBalance());
+		
+	}
+
+}
+
+//Account
+
+package day2;
+
+public class Account {
+	    private int acno;
+		private String name;
+		private double balance;
+		
+		
+		public Account(int acno, String name, double balance) {
+			
+			this.acno = acno;
+			this.name = name;
+			this.balance = balance;
+		}
+		public int getAcno() {
+			return acno;
+		}
+		public void setAcno(int acno) {
+			this.acno = acno;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public double getBalance() {
+			return balance;
+		}
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
+        
+	
+
+}
+
+//AccountMain
+
+package day2;
+
+public class AccoutMain {
+
+	public static void main(String[] args) {
+		
+		Account acn = new Account(11,"aa",500);
+		
+		System.out.println(acn.getAcno()+" "+acn.getName()+" "+acn.getBalance());
+		
+	}
+
+}
+
+//Account
+
+package day2;
+
+public class Account {
+	    private int acno;
+		private String name;
+		private double balance;
+		
+		Account(){
+			
+		}
+		
+		public Account(int acno, String name, double balance) {
+			
+			this.acno = acno;
+			this.name = name;
+			this.balance = balance;
+		}
+		public int getAcno() {
+			return acno;
+		}
+		public void setAcno(int acno) {
+			this.acno = acno;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public double getBalance() {
+			return balance;
+		}
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
+        
+	
+
+}
+
+
+//Accountain
+
+package day2;
+
+public class AccoutMain {
+
+	public static void main(String[] args) {
+		
+		Account acn = new Account(11,"aa",500);
+		Account acn2 = new Account(12,"ab",600);
+		Account acn21 = new Account();
+		System.out.println(acn.getAcno()+" "+acn.getName()+" "+acn.getBalance());
+		System.out.println(acn21.getAcno()+" "+acn21.getName()+" "+acn21.getBalance());
+		
+	}
+
+}
 
 //customer
 
@@ -474,4 +640,203 @@ public class Library extends Studentt{
 	}
 
 }
+//
+
+//studentt -> Library
+package day2;
+
+public class Studentt {
+	protected int regno;
+	protected String name;
+	protected String group;
+	Studentt{
+		
+	}
+	public Studentt(int regno, String name, String group) {
+		
+		this.regno = regno;
+		this.name = name;
+		this.group = group;
+	}
+	public void display() {
+		System.out.println("This is from super class");
+	}
+}
+
+
+//
+package day2;
+
+public class Library extends Studentt{
+	private int booksTaken;
+	
+	public Library(int regno, String name, String group, int booksTaken) {
+		super(regno, name, group);
+		this.booksTaken = booksTaken;
+	}
+	public Library() {
+		// TODO Auto-generated constructor stub
+	}
+	void output() {
+		System.out.println(regno+" "+name+" "+" "+group+" "+booksTaken);
+	}
+	public void display() {
+		//super.display();
+		System.out.println("This is from sub class");
+	}
+	public static void main(String[] args) {
+		/*Library lib = new Library(101,"neelima","EEE",6);
+		lib.output();
+		lib.display();*/
+		Studentt std = new Studentt();
+		std.display();
+		std = new Library();
+		
+		
+		
+
+	}
+
+}
+//Studentt
+
+//studentt -> Library
+package day2;
+
+public class Studentt {
+	protected int regno;
+	protected String name;
+	protected String group;
+	public Studentt(){
+		regno = 10101;
+		name = "Neelima";
+		group = "EEE";
+	}
+	
+	void display() {
+		System.out.println(regno+" "+name+" "+" "+group);
+	}
+}
+
+//Library
+package day2;
+
+public class Library extends Studentt{
+	private int booksTaken;
+	
+	public Library() {
+		booksTaken = 5;
+	}
+	void output() {
+		System.out.println(regno+" "+name+" "+" "+group+" "+booksTaken);
+	}
+	public static  void main(String[] args) {
+		Library lib = new Library();
+		lib.output();
+		lib.display();
+	}
+
+}
+
+//Student
+
+//studentt -> Library
+package day2;
+
+public class Studentt {
+	protected int regno;
+	protected String name;
+	protected String group;
+	
+	public Studentt(int regno, String name, String group) {
+		super();
+		this.regno = regno;
+		this.name = name;
+		this.group = group;
+	}
+
+	void display() {
+		System.out.println(regno+" "+name+" "+" "+group);
+	}
+}
+
+
+//Library
+
+package day2;
+
+public class Library extends Studentt{
+	private int booksTaken;
+	
+	
+	public Library(int regno, String name, String group, int booksTaken) {
+		super(regno, name, group);
+		this.booksTaken = booksTaken;
+	}
+	void output() {
+		System.out.println(regno+" "+name+" "+" "+group+" "+booksTaken);
+	}
+	public static  void main(String[] args) {
+		Library lib = new Library(1010,"Neelima","EEE",6);
+		lib.output();
+		lib.display();
+	}
+
+}
+
+//Studentt
+
+//studentt -> Library
+package day2;
+
+public class Studentt {
+	protected int regno;
+	protected String name;
+	protected String group;
+	
+	public Studentt(int regno, String name, String group) {
+		super();
+		this.regno = regno;
+		this.name = name;
+		this.group = group;
+	}
+
+	public void display() {
+		System.out.println("This is from super class ");
+	}
+}
+
+
+//Library
+
+package day2;
+
+public class Library extends Studentt{
+	private int booksTaken;
+	
+	
+	public Library(int regno, String name, String group, int booksTaken) {
+		super(regno, name, group);
+		this.booksTaken = booksTaken;
+	}
+	void output() {
+		System.out.println(regno+" "+name+" "+" "+group+" "+booksTaken);
+	}
+	
+	public void display() {
+		super.display();
+		System.out.println("This is from sub class");
+		
+	}
+	public static  void main(String[] args) {
+		Library lib = new Library(1010,"Neelima","EEE",6);
+		lib.output();
+		lib.display();
+	}
+
+}
+
+
+//
+
 
