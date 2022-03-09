@@ -1,0 +1,175 @@
+//Arthmetic
+
+package day3;
+
+public interface Arthematic {
+	void add();
+	
+}
+
+//TestJava8Interfaces
+
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = ()->{
+			System.out.println("this is from add()");
+		};
+        arth.add();
+	}
+
+}
+
+//Arthmetic
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = ()->{
+			System.out.println("this is from add()");
+		};
+        arth.add();
+	}
+
+}
+
+//TestJava8Interfaces
+
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = ()->{
+			System.out.println("this is from add()");
+		};
+        arth.add();
+        arth.display();
+	}
+
+}
+
+
+//Arthematic->TestJava8Interfaces
+package day3;
+
+public interface Arthematic {
+	void add();
+	default void display(int x) {
+		System.out.println("this is from default method "+x);
+	}
+}
+
+
+//TestJava8Interfaces
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = ()->{
+			System.out.println("this is from add()");
+		};
+        arth.add();
+        arth.display(5);
+	}
+
+}
+
+//Arthematic->TestJava8Interfaces
+package day3;
+
+public interface Arthematic {
+	void add();
+	default void display(int x) {
+		System.out.println("this is from default method "+x);
+	}
+	
+	static void output() {
+		System.out.println("this is from static method");
+	}
+}
+
+
+//TestJava8Interfaces
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = ()->{
+			System.out.println("this is from add()");
+		};
+        arth.add();
+        arth.display(5);
+        Arthematic.output();
+	}
+
+}
+
+//Arthematic->TestJava8Interfaces
+package day3;
+
+public interface Arthematic {
+	void add(int y, int z);
+	default void display(int x) {
+		System.out.println("this is from default method "+x);
+	}
+	
+	static void output() {
+		System.out.println("this is from static method");
+	}
+}
+
+
+//TestJava8Interfaces
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = (y,z)->{
+			System.out.println("this is from add() "+y+" "+z);
+		};
+        arth.add(10,20);
+        arth.display(5);
+        Arthematic.output();
+	}
+
+}
+
+//using return type
+//Arthematic->TestJava8Interfaces
+package day3;
+
+public interface Arthematic {
+	int add(int y, int z);
+	default void display(int x) {
+		System.out.println("this is from default method "+x);
+	}
+	
+	static void output() {
+		System.out.println("this is from static method");
+	}
+}
+
+//TestJava8Interfaces
+package day3;
+
+public class TestJava8Interfaces {
+
+	public static void main(String[] args) {
+		Arthematic  arth = (y,z)->{
+			System.out.println("with parameters "+y+" "+z);
+			return y+z;
+		};
+		System.out.println("using return type "+arth.add(10, 20));
+        arth.display(5);
+        Arthematic.output();
+	}
+
+}
+
