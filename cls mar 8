@@ -837,6 +837,74 @@ public class Library extends Studentt{
 }
 
 
-//
+//studentt -> Library
+//upcasting and down casting
+package day2;
+
+public class Studentt {
+	protected int regno;
+	protected String name;
+	protected String group;
+	
+	public Studentt(int regno, String name, String group) {
+		super();
+		this.regno = regno;
+		this.name = name;
+		this.group = group;
+	}
+
+	public Studentt() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void display() {
+		System.out.println("This is from super class ");
+	}
+}
+
+
+//Studentt->Library
+//upcasting and down casting
+package day2;
+
+public class Library extends Studentt{
+	private int booksTaken;
+	
+	
+	/*public Library(t regno, Stinring name, String group, int booksTaken) {
+		super(regno, name, group);
+		this.booksTaken = booksTaken;
+	}*/
+	public Library() {
+		// TODO Auto-generated constructor stub
+	}
+	void output() {
+		System.out.println(regno+" "+name+" "+" "+group+" "+booksTaken);
+	}
+	
+	public void display() {
+		//super.display();
+		System.out.println("This is from sub class");
+		
+	}
+	public static  void main(String[] args) {
+		/*Library lib = new Library(1010,"Neelima","EEE",6);
+		lib.output();
+		lib.display();*/
+		System.out.println("up casting");
+		Studentt std = new Studentt();
+		std.display();
+		std = new Library();
+		std.display();//upcasting
+		System.out.println("down casting");
+		Library lib = new Library();
+		lib.display();
+		
+		
+		
+	}
+
+}
+
 
 
