@@ -391,3 +391,69 @@ public class ArrayListEx2 {
 
 }
 
+
+//TestInterface-one-two-three
+//interface
+package day3;
+
+public class TestInterface implements One,Two{
+
+	public static void main(String[] args) {
+		TestInterface test = new TestInterface();
+		test.display();
+		System.out.println(One.x);
+		test.method2();
+		test.method3();
+	
+	}
+
+	@Override
+	public void display() {
+		System.out.println("this is from interfece one");
+	}
+	
+	@Override
+	public void method2() {
+		System.out.println("this is from interfece Two");
+	}
+	
+	@Override
+	public void method3() {
+		System.out.println("this is from interfece Three");
+	}
+
+}
+
+
+//interface
+//one two three testinterface
+package day3;
+
+public interface One {
+	int x=100;
+	void display();
+		
+	
+
+}
+
+
+//interface
+//one two three testinterface
+package day3;
+
+public interface Two extends Three{
+
+	void method2();
+
+}
+
+
+//interface
+//one two three testinterface
+package day3;
+
+public interface Three {
+	void method3();
+}
+
