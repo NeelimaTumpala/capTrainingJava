@@ -173,3 +173,221 @@ public class TestJava8Interfaces {
 
 }
 
+
+////exception handling
+//TestExcep
+package day3;
+
+public class TestExcep {
+
+	public static void main(String[] args) {
+		int x=7;
+		int y=0;
+		try {
+			int r=x/y;
+			System.out.println("result " +r);
+		}
+		catch(ArithmeticException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Sucessful");
+
+	}
+
+}
+
+////exception handling
+//TestExcep
+package day3;
+
+public class TestExcep {
+
+	public static void main(String[] args) {
+		int x=7;
+		int y=0;
+		int arr[]= {4,3,2,4,5,6};
+		try {
+			int r=x/y;
+			System.out.println("result " +r);
+			System.out.println("elements "+arr[5]);
+		}
+		catch(ArithmeticException e) {
+			e.printStackTrace();
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Sucessful");
+
+	}
+
+}
+
+
+//exception handling
+//TestExcep from java 7 they were doing like this also
+package day3;
+
+public class TestExcep {
+
+	public static void main(String[] args) {
+		int x=7;
+		int y=2;
+		int arr[]= {4,3,2,4,5,6};
+		try {
+			int r=x/y;
+			System.out.println("result " +r);
+			System.out.println("elements "+arr[5]);
+		}
+		catch(ArithmeticException | ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Sucessful");
+
+	}
+
+}
+
+//EXception handling
+
+//TestUserException
+package day3;
+
+class EmployeeNotFoundException extends Exception{
+	public EmployeeNotFoundException() {
+		super("employee not found");
+	}
+}
+public class TestUserException {
+	
+	public static void main(String[] args) {
+		int empcode = 10;
+		try {
+			if(empcode<100 && empcode>200)
+				throw new EmployeeNotFoundException();
+			System.out.println("welcome to custome exception");
+		}
+		catch(EmployeeNotFoundException e) {
+			//e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+}
+
+//exception handling 
+//Withdraw
+package day3;
+
+class AcnoNotFoundException extends Exception{
+	public AcnoNotFoundException() {
+		super("Account number not found");
+	}
+class InsufficientBalanceException extends Exception{
+	public InsufficientBalanceException() {
+		super("Insufficient balance");
+	}
+}
+
+
+public class Withdraw {
+	
+	public void main(String[] args) {
+		int acno1 = Integer.parseInt(args[0]);
+		int balance1 = Integer.parseInt(args[1]);
+		int acno2=1001;
+		int balance2 = 5000;
+		try {
+			if(acno1!=acno2) 
+				throw new  AcnoNotFoundException();
+			System.out.println("Account Exist with acno "+acno1);
+			if(balance1>5000) 
+				throw new InsufficientBalanceException();
+			System.out.println("sufficient Balance");
+		}
+		catch(AcnoNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		catch(InsufficientBalanceException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+}
+}
+
+
+
+//dynamic allocation
+
+//ArrayListExample
+package day3;
+
+import java.util.ArrayList;
+import java.util.ListIterator;
+
+public class ArrayListExample {
+
+	public static void main(String[] args) {
+		ArrayList data = new ArrayList();
+		data.add("java");
+		data.add(50.33);
+		data.add("java");
+		data.add(20);
+		data.add(null);
+		System.out.println(data+" "+data.size());
+		data.add(10);
+		data.add("oracle");
+		data.add(2,"spring");
+		System.out.println(data+" "+data.size());
+		data.remove(new Integer(20));
+		data.remove(50.33);
+		data.remove("java");
+		System.out.println(data+" "+data.size());
+		ListIterator itr = data.listIterator();
+		while(itr.hasNext()) {
+			Object obj = itr.next();
+			if(obj instanceof Integer)
+				System.out.println(obj);
+		}
+		
+		/*used for prinitng all
+		 * while(itr.hasNext()) {
+		 * 		System.out.println(obj);
+		 * 
+		 */
+		
+		
+
+	}
+
+}
+
+////dynamic allocation only string
+//ArrayListEx2
+package day3;
+
+import java.util.ArrayList;
+
+public class ArrayListEx2 {
+
+	public static void main(String[] args) {
+		ArrayList<String> items = new ArrayList<String>();
+		items.add("java");
+		items.add("Neelima");
+		items.add("spring");
+		for(String s : items) {
+			System.out.println(s);
+		}
+		/*another way to print
+		 * items.forEach(s)->System.out.println(s));
+		 */
+		
+
+	}
+
+}
+
