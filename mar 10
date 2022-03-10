@@ -1,0 +1,864 @@
+
+//KeyBoardInputs//TreeSetEx//LinkedList//collection/Employee->EmployeeList//Sorting-->comparable->according to code/collection/Employee->EmployeeList//
+Sorting-->comparable->according to name/collection/Employee->EmployeeList->SortByName//Sorting-->comparable->according to salary/Employee->EmployeeList->SortByName
+//mapping technique/Hash map example//HashSetExample//Write to file/file creation- delete-write//ReadFromFile/Program to read from a file//binary stream/task->card details 
+has to be write in a file and read details/CardDetails->writeObjectFile->ReadobjectFile//char stream/all the time we can not read input from scanner so we use input stream 
+reader//task/Account->Transactions->BankAppln
+//KeyBoardInputs
+package day4;
+
+import java.util.Scanner;
+
+public class KeyBoardInputs {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter code name salary id");;
+		int code = sc.nextInt();
+		String name = sc.next();
+		double sal = sc.nextDouble();
+		float id = sc.nextFloat();
+		System.out.println(code+name+sal+id);
+
+	}
+
+}
+
+
+//TreeSetEx
+package day4;
+
+import java.util.TreeSet;
+
+public class TreeSetEx {
+
+	public static void main(String[] args) {
+		TreeSet<String> set = new TreeSet<String>();
+		set.add("java");
+		set.add("aaa");
+		set.add("spring");
+		set.add("oracle");
+		set.add("java");
+		System.out.println(set);
+		
+		
+
+	}
+
+}
+
+//LinkedList
+package day4;
+
+import java.util.LinkedList;
+
+public class LinkedLiistEx {
+
+	public static void main(String[] args) {
+		
+		LinkedList<String> list = new LinkedList<String>();
+		list.add("aaa");
+		list.add("java");
+		list.add("spring");
+		System.out.println(list);
+		list.addFirst("oracle");
+		list.addLast("james");
+		System.out.println(list);
+		list.forEach((l)->System.out.println(l));
+
+	}
+
+}
+
+//collection
+//Employee->EmployeeList
+package day4;
+
+public class Employee {
+	private int code;
+	private String name;
+	private double salary;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String name, double salary) {
+		this.code = code;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [code=" + code + ", name=" + name + ", salary=" + salary + "]";
+	}	
+}
+
+//collection
+//Employee->EmployeeList
+package day4;
+
+import java.util.ArrayList;
+
+public class EmployeeList {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(101,"arjun",5000));
+		emplist.add(new Employee(121,"james",5500));
+		emplist.add(new Employee(201,"gemini",6000));
+		System.out.println(emplist);
+		for(Employee emp : emplist)
+			System.out.println(emp.getCode()+emp.getName()+emp.getSalary());
+    emplist.forEach((e)->System.out.println(e.getCode()+e.getName()+e.getSalary()));
+
+	}
+	
+
+}
+
+//Sorting-->comparable->according to code
+//collection
+//Employee->EmployeeList
+package day4;
+
+public class Employee implements Comparable<Employee>{
+	private int code;
+	private String name;
+	private double salary;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String name, double salary) {
+		this.code = code;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [code=" + code + ", name=" + name + ", salary=" + salary + "]";
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		
+		return this.code - o.getCode();
+	}	
+}
+
+//Sorting-->comparable->according to code
+//collection
+//Employee->EmployeeList
+package day4;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class EmployeeList {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(101,"arjun",5000));
+		emplist.add(new Employee(121,"james",5500));
+		emplist.add(new Employee(201,"gemini",6000));
+		Collections.sort(emplist);
+		emplist.forEach((e)->System.out.println(e.getCode()+e.getName()+e.getSalary()));
+	}
+	
+}
+
+
+//Sorting-->comparable->according to name
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+public class Employee implements Comparable<Employee>{
+	private int code;
+	private String name;
+	private double salary;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String name, double salary) {
+		this.code = code;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [code=" + code + ", name=" + name + ", salary=" + salary + "]";
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		
+		return this.code - o.getCode();
+	}	
+}
+
+//Sorting-->comparable->according to name
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class EmployeeList {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(101,"arjun",5000));
+		emplist.add(new Employee(121,"james",5500));
+		emplist.add(new Employee(201,"gemini",6000));
+		Collections.sort(emplist,new SortedByName());
+		emplist.forEach((e)->System.out.println(e.getCode()+e.getName()+e.getSalary()));
+	}
+	
+}
+
+//Sorting-->comparable->according to name
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.Comparator;
+
+public class SortedByName implements Comparator<Employee> {
+
+	@Override
+	public int compare(Employee o1, Employee o2) {
+		
+		return o1.getName().compareTo(o2.getName());
+	}
+
+}
+
+
+//Sorting-->comparable->according to salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+public class Employee implements Comparable<Employee>{
+	private int code;
+	private String name;
+	private double salary;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String name, double salary) {
+		this.code = code;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [code=" + code + ", name=" + name + ", salary=" + salary + "]";
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		
+		return this.code - o.getCode();
+	}
+	
+}
+
+//Sorting-->comparable->according to salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class EmployeeList {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(101,"arjun",5000));
+		emplist.add(new Employee(121,"james",5500));
+		emplist.add(new Employee(201,"gemini",6000));
+		//Collections.sort(emplist,new SortedByName());
+		//emplist.forEach((e)->System.out.println(e.getCode()+e.getName()+e.getSalary()));
+		Collections.sort(emplist,new SortedBySalary());
+		emplist.forEach((e)->System.out.println(e.getCode()+e.getName()+e.getSalary()));
+	}
+	
+}
+
+//Sorting-->comparable->according to salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.Comparator;
+
+public class SortedBySalary implements Comparator<Employee> {
+
+	@Override
+	public int compare(Employee o1, Employee o2) {
+		
+		return Double.compare(o1.getSalary(),o2.getSalary());
+	}
+
+}
+
+
+
+//mapping technique
+//Hash map example
+package day4;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class HashMapEx {
+
+	public static void main(String[] args) {
+		HashMap<String, Integer> data = new HashMap<String, Integer>();
+		data.put("aaa", 123);
+		data.put("bbb",345);
+		data.put("ccc",456);
+		data.put("ddd",567);
+		System.out.println(data);
+		System.out.println(data.get("aaa"));
+		Set set = data.entrySet();
+		Iterator itr =set.iterator();
+		while(itr.hasNext()) {
+			Map.Entry<String, Integer> entry = (Entry<String, Integer>) itr.next();
+			System.out.println(entry.getKey()+":"+entry.getValue());
+		}
+		
+
+	}
+}
+
+//HashSetExample
+package day4;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+
+public class HashSetEx {
+
+	public static void main(String[] args) {
+		HashSet<String> set =new HashSet<String>();
+		set.add("aaa");
+		set.add("java");
+		set.add("Spring");
+		set.add("oracle");
+		set.add("java");
+		set.add(null);
+		set.add(null);
+		System.out.println(set);
+		Iterator<String> itr = set.iterator();
+		while(itr.hasNext());
+			System.out.println(itr.next());
+		
+		
+		
+	}
+
+}
+
+//Write to file
+//file creation- delete-write
+package day4;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class WriteToFile {
+
+	public static void main(String[] args) {
+		//File file =new File("D:\\cg\\");
+		//file.mkdir();
+		//file.delete();
+		//System.out.println("delete");
+		//System.out.println("created");
+		try {
+			FileOutputStream fos = new FileOutputStream("D:\\cg\\sample.txt");
+			for(int i=65;i<=90;i++)
+				fos.write(i);;
+			fos.close();
+			System.out.println("created");
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		}
+	
+
+	}
+
+
+//ReadFromFile
+//Program to read from a file
+package day4;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class ReadFromFile {
+	
+
+	public static void main(String[] args) {
+		try {
+			FileInputStream fis = new FileInputStream("D:\\cg\\sample.txt");
+			int c;
+			while((c=fis.read())!=-1)
+				System.out.print((char)c);
+			fis.close();
+					
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
+//binary stream
+//task->card details has to be write in a file and read details
+//CardDetails->writeObjectFile->ReadobjectFile
+package day4;
+
+import java.io.Serializable;
+
+public class CardDetails implements Serializable{
+	private long cardno;
+	private int cvv;
+	private String name;
+	private String expirydate;
+	public CardDetails() {
+		
+	}
+	public CardDetails(long cardno, int cvv, String name, String expirydate) {
+		super();
+		this.cardno = cardno;
+		this.cvv = cvv;
+		this.name = name;
+		this.expirydate = expirydate;
+	}
+	public long getCardno() {
+		return cardno;
+	}
+	public void setCardno(long cardno) {
+		this.cardno = cardno;
+	}
+	public int getCvv() {
+		return cvv;
+	}
+	public void setCvv(int cvv) {
+		this.cvv = cvv;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getExpirydate() {
+		return expirydate;
+	}
+	public void setExpirydate(String expirydate) {
+		this.expirydate = expirydate;
+	}
+	
+}
+//binary stream
+//task->card details has to be write in a file and read details
+//CardDetails->writeObjectFile->ReadobjectFile
+package day4;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+public class WriteObjectToFile {
+
+	public static void main(String[] args) {
+		try {
+			FileOutputStream fos = new FileOutputStream("D:\\cg\\cardinfo");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			CardDetails card1 = new CardDetails(123456789,456,"joha", "10/25");
+			CardDetails card2 = new CardDetails(988574354,465,"adbul", "11/22");
+			oos.writeObject(card1);
+			oos.writeObject(card2);
+			fos.close();
+			System.out.println("created");
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+			
+		}
+
+	}
+
+}
+//binary stream
+//task->card details has to be write in a file and read details
+//CardDetails->writeObjectFile->ReadobjectFile
+package day4;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class ReadObjectFile {
+
+	public static void main(String[] args) {
+		try {
+			FileInputStream fis = new FileInputStream("D:\\cg\\cardinfo");
+			ObjectInputStream ois =new ObjectInputStream(fis);
+			Object obj;
+			while((obj=ois.readObject()) !=null) {
+				CardDetails card = (CardDetails) obj;
+				System.out.println(card.getCardno()+" "+card.getCvv()+" "+card.getName()+" "+card.getExpirydate());
+				
+			}
+			ois.close();
+			fis.close();
+			
+		}catch(IOException | ClassNotFoundException e) {
+			//e.printStackTrace();
+		}
+
+	}
+
+}
+
+//char stream
+//all the time we can not read input from scanner so we use input stream reader
+package day4;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ConsoleInputs {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		System.out.println("Enter code name salary");
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		int code = Integer.parseInt(br.readLine());
+		String name = br.readLine();
+		double sal = Double.parseDouble(br.readLine());
+		System.out.println(code+" "+name+" "+sal);
+		
+
+	}
+
+}
+
+
+//task
+//Account->Transactions->BankAppln
+package day4;
+
+public class Account implements Comparable <Account>{
+	private int accountNumber;
+	private String customerName;
+	private double balance;
+	public Account() {
+		
+	}
+	public Account(int accountNumber, String customerName, double balance) {
+		super();
+		this.accountNumber = accountNumber;
+		this.customerName = customerName;
+		this.balance = balance;
+	}
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	@Override
+	public int compareTo(Account o) {
+		
+		return this.accountNumber-o.getAccountNumber();
+	}
+	
+	
+}
+
+
+//task
+//Account->Transactions->BankAppln
+package day4;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Transactions {
+	
+	ArrayList<Account> accountList = new ArrayList<Account>();
+	public Transactions() {
+		accountList.add(new Account(100365,"john",100000));
+		accountList.add(new Account(100366,"james",100000));
+		accountList.add(new Account(100367,"martin",100000));
+		accountList.add(new Account(100368,"newton",100000));
+	}
+	
+	public void deposit(int acno, double amount) {
+		int i=0;
+		for(Account ac : accountList) {
+			if(ac.getAccountNumber()==acno) {
+				System.out.println("This is a valid account number");
+				double balance = ac.getBalance()+amount;
+				ac.setBalance(balance);
+				System.out.println("The amount "+amount+"is successfully added to account number "+balance);
+				i=1;
+			}
+			if(i==0) {
+				System.out.println("This account number is not valid please enter a valid number");
+				
+			}
+		}
+		
+	}
+	public void withdraw(int acno, double amount) {
+		int i=0;
+		for(Account ac : accountList) {
+			if(ac.getAccountNumber()==acno && ac.getBalance()>amount) {
+				System.out.println("this is a valid account number");
+				System.out.println("there is sufficient amount of money you can withdraw");
+				
+				double balance = ac.getBalance()-amount;
+				ac.setBalance(balance);
+				System.out.println("The amount "+amount+"is successfully deduced and the remaining balance is "+balance);
+				i=1;
+			}
+			if(i==0) {
+				if(ac.getAccountNumber()!=acno) {
+					System.out.println("This account number is not valid please enter a valid number");
+				if(ac.getBalance()<amount){
+					System.out.println("Insufficient balance...can not withdraw ");
+				}
+					
+				}
+			}
+		}
+		
+	}
+	public void checkBalance(int acno) {
+		int i=0;
+		for(Account ac :accountList) {
+			if(ac.getAccountNumber()==acno) {
+				System.out.println("your balance is "+ac.getBalance());
+			}
+			if(ac.getAccountNumber()!=acno) {
+				System.out.println("Incorrect Account number please enter a valid account number");
+				
+			}
+		}
+		
+	}
+	public void viewAccount() {
+		Collections.sort(accountList);
+		System.out.println("List of accounts :");
+		accountList.forEach((e)->System.out.println("accoutNumber :"+e.getAccountNumber()+
+				" customerName :"+e.getCustomerName()+" balance :"+e.getBalance()));
+	}
+
+}
+
+
+//task
+//Account->Transactions->BankAppln
+package day4;
+
+import java.util.Scanner;
+
+public class BankAppln {
+
+	public static void main(String[] args) {
+		Transactions tran = new Transactions();
+		int exit=0;
+		Scanner sc = new Scanner(System.in);
+		while(exit!=1) {
+			System.out.println("Select the required operation");
+			System.out.println("1.Deposit money");
+			System.out.println("2.Withdraw money");
+			System.out.println("3.check balance ");
+			System.out.println("4.View accounts ");
+			System.out.println("5.EXIT");
+			int opt = sc.nextInt();
+			switch(opt) {
+			case 1 :
+			{
+				System.out.println("Enter the account number and amount to be deposited: ");
+				int acno = sc.nextInt();
+				double amount = sc.nextDouble();
+				tran.deposit(acno,amount);
+				break;
+				
+					
+			}
+			case 2:
+			{
+				System.out.println("Enter the account number and amount to be withdraw: ");
+				int acno = sc.nextInt();
+				double amount = sc.nextDouble();
+				tran.withdraw(acno,amount);
+				break;
+			}
+			case 3:
+			{
+				System.out.println("Enter the account number to check balance");
+				int acno = sc.nextInt();
+				tran.checkBalance(acno);
+				break;
+			}
+			case 4:
+			{
+				tran.viewAccount();
+				break;
+			}
+			case 5:
+				
+				exit =1;
+				if(exit==1) {
+					System.out.println("exited successfully");
+				}
+				break;
+				
+			}
+			
+				
+		}
+		
+
+	}
+
+}
