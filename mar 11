@@ -1,0 +1,206 @@
+//Threads->Runnable interface/Numbers->ThreadApp1/ever time we execute we get differeent output
+//task/BerthReservation->ReservationAppln
+//Join() example using threads/MyRunnable->ThreadsJoinEx/join() used to intimate before ending
+//wait()->notify()/Transactions->WaitNotifyExample
+//UsingThreadClass
+
+//Threads->Runnable interface
+//Numbers->ThreadApp1
+//ever time we execute we get differeent output
+package day5;
+
+public class Numbers implements Runnable{
+
+	@Override
+	public synchronized void run() {
+		System.out.println(Thread.currentThread().getName());
+		for(int i=1;i<=5;i++) {
+			System.out.print(i+" ");
+		}
+		
+	}
+
+}
+
+//Threads->Runnable interface
+//Numbers->ThreadApp1
+//ever time we execute we get different output
+package day5;
+
+public class ThreadApp1 {
+
+	public static void main(String[] args) {
+		Numbers num = new Numbers();
+		Thread t1 =new Thread(num);
+		Thread t2 =new Thread(num);
+		Thread t3 =new Thread(num);
+		t1.setName("A");
+		t2.setName("B");
+		t3.setPriority(Thread.MAX_PRIORITY);
+		t3.setName("c");
+		t1.start();
+		t2.start();
+		t3.start();
+		
+
+	}
+
+}
+
+//task
+//BerthReservation->ReservationAppln
+package day5;
+
+import java.util.Scanner;
+
+public class BerthReservation implements Runnable{
+	int available = 10;
+	
+	@Override
+	public synchronized void run() {
+		Scanner sc = new Scanner(System.in);
+		if(available>0) {
+			System.out.println("welcome"+Thread.currentThread().getName()+"!!"+
+		"Available birth are: "+available);
+			System.out.println("Enter the required berths :");
+			int a = sc.nextInt();
+			available-=a;
+			System.out.println(a+" berths allocated to "+Thread.currentThread().getName());
+		}else {
+			System.out.println("Welcome "+Thread.currentThread().getName()+"!! "
+					+ "sorry births are not available...");
+		}
+			
+		
+	}
+	
+
+}
+
+//task
+//BerthReservation->ReservationAppln
+package day5;
+
+import java.util.Scanner;
+
+public class ReservationAppln {
+
+	public static void main(String[] args) {
+		BerthReservation ber = new BerthReservation();
+		Thread t1 = new Thread(ber);
+		Thread t2 = new Thread(ber);
+		Thread t3 = new Thread(ber);
+		Thread t4 = new Thread(ber);
+		t1.setName("A");
+		t2.setName("B");
+		t3.setName("C");
+		t4.setName("D");
+		
+				
+		t1.start();
+		t2.start();
+		t3.start();
+		t4.start();
+		
+	}
+
+}
+
+
+//Join() example using threads
+//MyRunnable->ThreadsJoinEx
+//join() used to intimate before ending
+package day5;
+
+public class MyRunnable implements Runnable{
+
+	@Override
+	public void run() {
+		System.out.println("Thread started :: "+Thread.currentThread().getName());
+		try {
+			Thread.sleep(3000);
+		}catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Thread ended :: "+Thread.currentThread().getName());
+		
+	}
+
+}
+
+
+//wait()->notify()
+//Transactions->WaitNotifyExample
+package day5;
+
+public class Transactions {
+	int available = 5000;
+	synchronized void withdraw(int amount) {
+		System.out.println("Available balance  = "+this.available);
+		System.out.println("trying to withdraw..."+amount);
+		if(this.available<amount) {
+			System.out.println("Less balance; waiting for deposite... ");
+			try {
+				wait();
+				Thread.sleep(3000);
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+			this.available -=amount;
+			System.out.println("withdraw completed...balance is :"+this.available);
+		
+	}
+		synchronized void deposit(int amount) {
+			System.out.println("trying to deposite..."+amount);
+			this.available+=amount;
+			/*try {
+				Thread.sleep(3000);
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}*/
+			System.out.println("deposite completed.. available amount..."+this.available);
+			notify();
+			
+		}
+	}
+
+//wait()->notify()
+//Transactions->WaitNotifyExample
+package day5;
+
+public class WaitNotifyExample {
+
+	public static void main(String[] args) {
+		Transactions tran =new Transactions();
+		Thread t1= new Thread() {public void run() {tran.withdraw(2000);}};
+		Thread t2= new Thread() {public void run() {tran.deposit(5000);}};
+		t1.start();
+		t2.start();
+		
+		}
+
+}
+
+//UsingThreadClass
+package day5;
+
+public class UsingThreadClass extends Thread{
+
+	
+		@Override 
+		public synchronized void run() {
+			System.out.println(Thread.currentThread());
+			for(int i=1;i<5;i++)
+				System.out.print(i+" ");
+		}
+		public static void main(String[] args) {
+			UsingThreadClass t1 = new UsingThreadClass();
+			UsingThreadClass t2 = new UsingThreadClass();
+			t1.start();
+			t2.start();
+					
+
+	}
+
+}
