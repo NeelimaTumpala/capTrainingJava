@@ -3,6 +3,8 @@
 //Join() example using threads/MyRunnable->ThreadsJoinEx/join() used to intimate before ending
 //wait()->notify()/Transactions->WaitNotifyExample
 //UsingThreadClass
+//streams/sorting/Employee->EmployeeList
+//streams/sorting/Employee->EmployeeSorting
 
 //Threads->Runnable interface
 //Numbers->ThreadApp1
@@ -200,6 +202,192 @@ public class UsingThreadClass extends Thread{
 			t1.start();
 			t2.start();
 					
+
+	}
+
+}
+
+
+//streams
+//sorting
+//Employee->EmployeeList
+package day5;
+
+public class Employee {
+	private int empcode;
+	private String empname;
+	private double basicSalary;
+	private String city;
+	public Employee() {
+		
+	}
+	public Employee(int empcode, String empname, double basicSalary, String city) {
+		super();
+		this.empcode = empcode;
+		this.empname = empname;
+		this.basicSalary = basicSalary;
+		this.city = city;
+	}
+	public int getEmpcode() {
+		return empcode;
+	}
+	public void setEmpcode(int empcode) {
+		this.empcode = empcode;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getBasicSalary() {
+		return basicSalary;
+	}
+	public void setBasicSalary(double basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+
+}
+
+
+//streams
+//sorting
+//Employee->EmployeeList
+package day5;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+public class EmpStreamEx1 {
+
+	public static void main(String[] args) {
+		List<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(14,"kavya",8000,"del"));
+		emplist.add(new Employee(15,"hari",9000,"hyd"));
+		emplist.add(new Employee(16,"laxmi",10000,"ben"));
+		emplist.add(new Employee(17,"saraswathi",11000,"jaipur"));
+		
+		//exract code from the emplist
+		List<Integer> codeList = emplist.stream()
+				.map(e->e.getEmpcode())
+				.collect(Collectors.toList());
+		System.out.println(codeList);
+		System.out.println("max value = "+Collections.max(codeList));
+		System.out.println("min value = "+Collections.min(codeList));
+		System.out.println("check for = "+codeList.contains(11));
+		
+		
+		
+		//extract salary from the emplist
+		List<Double> salaries = emplist.stream()
+				.filter(f->f.getBasicSalary()>8000)
+				.map(s->s.getBasicSalary())
+				.collect(Collectors.toList());
+		System.out.println(salaries);
+		//extract the employee object object whose salary is >30000
+		List<Employee> salaryList = emplist.stream()
+				.filter(f->f.getBasicSalary()>3000)
+				.map(m->m)
+				.collect(Collectors.toList());
+		System.out.println(salaryList);
+		salaryList.forEach((e)->System.out.println(e));
+
+	}
+
+}
+
+
+//streams
+//sorting
+//Employee->EmployeeSorting
+package day5;
+
+public class Employee {
+	private int empcode;
+	private String empname;
+	private double basicSalary;
+	private String city;
+	public Employee() {
+		
+	}
+	public Employee(int empcode, String empname, double basicSalary, String city) {
+		super();
+		this.empcode = empcode;
+		this.empname = empname;
+		this.basicSalary = basicSalary;
+		this.city = city;
+	}
+	public int getEmpcode() {
+		return empcode;
+	}
+	public void setEmpcode(int empcode) {
+		this.empcode = empcode;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getBasicSalary() {
+		return basicSalary;
+	}
+	public void setBasicSalary(double basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+
+}
+
+
+//streams
+//sorting
+//Employee->EmployeeSorting
+package day5;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class EmployeeSorting {
+
+	public static void main(String[] args) {
+		List<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(14,"kavya",8000,"del"));
+		emplist.add(new Employee(15,"hari",9000,"hyd"));
+		emplist.add(new Employee(16,"laxmi",10000,"ben"));
+		emplist.add(new Employee(17,"saraswathi",11000,"jaipur"));
+		/*Collections.sort(emplist,(e1,e2)->{
+			return e1.getEmpcode()-e2.getEmpcode();
+		});*/
+		/*emplist.stream().sorted((e1,e2)->{
+			return e1.getEmpname().compareTo(e2.getEmpname());
+		});*/
+		List<Employee> sortedList = emplist.stream().sorted((e1,e2)->{
+			return e1.getEmpname().compareTo(e2.getEmpname());})
+				.map(e->e)
+				.collect(Collectors.toList());
+		
+		emplist.forEach((e)->System.out.println(e.getEmpcode()+e.getEmpname()));
+		System.out.println();
+		sortedList.forEach((e)->System.out.println(e.getEmpcode()+e.getEmpname()));
 
 	}
 
