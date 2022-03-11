@@ -4,6 +4,8 @@ Sorting-->comparable->according to name/collection/Employee->EmployeeList->SortB
 //mapping technique/Hash map example//HashSetExample//Write to file/file creation- delete-write//ReadFromFile/Program to read from a file//binary stream/task->card details 
 has to be write in a file and read details/CardDetails->writeObjectFile->ReadobjectFile//char stream/all the time we can not read input from scanner so we use input stream 
 reader//task/Account->Transactions->BankAppln
+
+
 //KeyBoardInputs
 package day4;
 
@@ -859,6 +861,155 @@ public class BankAppln {
 		}
 		
 
+	}
+
+}
+
+
+//Sorting-->comparable->according to code,name,salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+public class Employee implements Comparable<Employee>{
+	private int code;
+	private String name;
+	private double salary;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String name, double salary) {
+		this.code = code;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [code=" + code + ", name=" + name + ", salary=" + salary + "]";
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		
+		return this.code - o.getCode();
+	}
+	
+}
+
+//Sorting-->comparable->according to code,name,salary
+
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class EmployeeList {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(101,"arjun",5000));
+		emplist.add(new Employee(121,"james",5500));
+		emplist.add(new Employee(201,"gemini",6000));
+		emplist.add(new Employee(122,"Akbar",5800));
+		emplist.add(new Employee(202,"berbal",6600));
+		Collections.sort(emplist,new SortedByName());
+		char c='Y';
+		do {
+			System.out.println("1.sort by code \n2.sort by name \n3.sort by salary \n4.exit");
+			System.out.println("enter the option");
+			int choice = sc.nextInt();
+			switch(choice) {
+			case 1: 
+				Collections.sort(emplist);
+				System.out.println("sort by code");
+				emplist.forEach((e)->System.out.println(e.getCode()+" "+e.getName()+" "+e.getSalary()));
+				break;
+			case 2:
+				Collections.sort(emplist,new SortedByName());
+				System.out.println("Sort by name");
+				emplist.forEach((e)->System.out.println(e.getCode()+" "+e.getName()+" "+e.getSalary()));
+				break;
+			case 3:
+				Collections.sort(emplist,new SortedBySalary());
+				System.out.println("sort by salary");
+				emplist.forEach((e)->System.out.println(e.getCode()+" "+e.getName()+" "+e.getSalary()));
+				break;
+			case 4:System.exit(0);
+				
+		}
+			System.out.println("Do you want to continue Y/N ?");
+			c=sc.next().charAt(0);
+			
+		
+		
+		
+	}while(c=='Y');
+	}
+}
+
+
+//Sorting-->comparable->according to code,name,salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.Comparator;
+
+public class SortedByName implements Comparator<Employee> {
+
+	@Override
+	public int compare(Employee o1, Employee o2) {
+		
+		return o1.getName().compareTo(o2.getName());
+	}
+
+}
+
+
+//Sorting-->comparable->according to code,name,salary
+//collection
+//Employee->EmployeeList->SortByName
+package day4;
+
+import java.util.Comparator;
+
+public class SortedBySalary implements Comparator<Employee> {
+
+	@Override
+	public int compare(Employee o1, Employee o2) {
+		
+		return Double.compare(o1.getSalary(),o2.getSalary());
 	}
 
 }
