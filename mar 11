@@ -392,3 +392,175 @@ public class EmployeeSorting {
 	}
 
 }
+
+
+//Streams
+
+//sorted based on salary in ArrayList
+//Employee->SortingMultipleKeys in A
+package day5;
+
+public class Employee {
+	private int empcode;
+	private String empname;
+	private double basicSalary;
+	private String city;
+	public Employee() {
+		
+	}
+	public Employee(int empcode, String empname, double basicSalary, String city) {
+		super();
+		this.empcode = empcode;
+		this.empname = empname;
+		this.basicSalary = basicSalary;
+		this.city = city;
+	}
+	public int getEmpcode() {
+		return empcode;
+	}
+	public void setEmpcode(int empcode) {
+		this.empcode = empcode;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getBasicSalary() {
+		return basicSalary;
+	}
+	public void setBasicSalary(double basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+
+}
+
+
+
+//Streams
+
+//sorted based on salary in ArrayList
+//Employee->SortingMultipleKeys in A
+
+package day5;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SortingMultipleKeys {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = new ArrayList<Employee>();
+		emplist.add(new Employee(14,"kavya",54000,"del"));
+		emplist.add(new Employee(9,"hari",9000,"hyd"));
+		emplist.add(new Employee(96,"laxmi",4000,"ben"));
+		emplist.add(new Employee(57,"saraswathi",11000,"jaipur"));
+		//sorting technique using multiple fields
+		//Sorted based on salary
+		Comparator<Employee> sortedList = 
+				Comparator.comparing(Employee::getBasicSalary)
+				.thenComparing(Employee::getEmpname);
+		List<Employee> empSortedList = emplist.stream()
+				.sorted(sortedList)
+				.collect(Collectors.toList());
+		empSortedList.forEach((e)->
+		System.out.println(e.getEmpcode()+" "+e.getEmpname()+" "+e.getBasicSalary()));
+
+	}
+
+}
+
+
+
+
+//sorted based on salary in ArrayList
+//Employee->EmployeeContains
+package day5;
+
+public class Employee {
+	private int empcode;
+	private String empname;
+	private double basicSalary;
+	private String city;
+	public Employee() {
+		
+	}
+	public Employee(int empcode, String empname, double basicSalary, String city) {
+		super();
+		this.empcode = empcode;
+		this.empname = empname;
+		this.basicSalary = basicSalary;
+		this.city = city;
+	}
+	public int getEmpcode() {
+		return empcode;
+	}
+	public void setEmpcode(int empcode) {
+		this.empcode = empcode;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getBasicSalary() {
+		return basicSalary;
+	}
+	public void setBasicSalary(double basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+
+}
+
+//sorted based on salary in ArrayList
+//Employee->EmployeeContains
+package day5;
+
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.stream.Stream;
+//Employee->EmplaoyeeContains
+public class EmployeeContains {
+
+	public static void main(String[] args) {
+		List<Employee> emplist = new ArrayList<Employee>();
+		Employee emp1 = new Employee(14,"kavya",54000,"del");
+		Employee emp2 = new Employee(9,"hari",9000,"hyd");
+		Employee emp3 = new Employee(96,"laxmi",19000,"ben");
+		Employee emp4 = new Employee(57,"saraswathi",11000,"jaipur");
+		emplist.add(emp1);
+		emplist.add(emp2);
+		emplist.add(emp3);
+		emplist.add(emp4);
+		long x = emplist.stream().filter(p->p.getEmpcode()==11).count();
+		System.out.println(x);
+		Stream<Object> emp = emplist.stream().filter(p->p.getEmpcode()==11).map(e->e);
+		System.out.println(emp.toString());
+		if(emplist.contains(emp2))
+			System.out.println(emp2);
+		
+
+	}
+
+}
+
+
