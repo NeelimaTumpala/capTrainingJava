@@ -1,4 +1,5 @@
 //connecting jdk to sql
+//values taken from user/connecting jdk to sql/creating a table and inserting into it
 //connecting jdk to sql/creating a table and inserting into it
 //to update student list in sql using jdk
 
@@ -23,7 +24,51 @@ public class TestDB {
 
 }
 
-//
+//values taken from user
+//connecting jdk to sql
+//creating a table and inserting into it
+package jdbc;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import oracle.jdbc.OracleDriver;
+
+public class TestDB {
+
+	public static void main(String[] args) throws SQLException {
+		DriverManager.registerDriver(new OracleDriver());
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		Connection conn = DriverManager.getConnection(url,"neelima","daaji");
+		System.out.println("connected");
+		/*
+		java.sql.Statement st = conn.createStatement();
+		String qry = "insert into studentt values(101,'mlk',80,90)";
+		st.executeUpdate(qry);
+		System.out.println("inserted");*/
+		Scanner sc = new Scanner(System.in);
+		String qry2  = "insert into studentt values(?,?,?,?)";
+		PreparedStatement pst = conn.prepareStatement(qry2);
+		int regno = sc.nextInt();
+		String stuname = sc.next();
+		int sub1 = sc.nextInt();
+		int sub2 = sc.nextInt();
+		pst.setInt(1, regno);
+		pst.setString(2, stuname);
+		pst.setInt(3, sub1);
+		pst.setInt(4, sub2);
+		pst.executeUpdate();
+		System.out.println("inserted");
+		
+
+	}
+
+}
+
 //connecting jdk to sql
 //creating a table and inserting into it
 package jdbc;
