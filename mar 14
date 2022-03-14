@@ -1,0 +1,131 @@
+
+//connecting jdk to sql
+package jdbc;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleDriver;
+
+public class TestDB {
+
+	public static void main(String[] args) throws SQLException {
+		DriverManager.registerDriver(new OracleDriver());
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		DriverManager.getConnection(url,"neelima","daaji");
+		System.out.println("connected");
+
+	}
+
+}
+
+//
+//connecting jdk to sql
+//creating a table and inserting into it
+package jdbc;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleDriver;
+
+public class TestDB {
+
+	public static void main(String[] args) throws SQLException {
+		DriverManager.registerDriver(new OracleDriver());
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		Connection conn = DriverManager.getConnection(url,"neelima","daaji");
+		System.out.println("connected");
+		/*
+		java.sql.Statement st = conn.createStatement();
+		String qry = "insert into studentt values(101,'mlk',80,90)";
+		st.executeUpdate(qry);
+		System.out.println("inserted");*/
+		String qry2  = "insert into studentt values(?,?,?,?)";
+		PreparedStatement pst = conn.prepareStatement(qry2);
+		pst.setInt(1, 104);
+		pst.setString(2, "james gosling");
+		pst.setInt(3, 80);
+		pst.setInt(4, 60);
+		pst.executeUpdate();
+		System.out.println("inserted");
+		
+
+	}
+
+}
+
+
+//what i done in sql command line while writing this code
+
+SQL> connect neelima;
+Enter password:
+Connected.
+
+SQL> create table sample(id number(3), name varchar(10));
+
+Table created.
+
+SQL> insert into sample values(21,'jai');
+
+1 row created.
+
+SQL> insert into sample values(22,'cha');
+
+1 row created.
+
+SQL> insert into sample values(23,'aaa');
+
+1 row created.
+
+SQL> insert into sample values(&id,'&name');
+Enter value for id: 24
+Enter value for name: bbb
+old   1: insert into sample values(&id,'&name')
+new   1: insert into sample values(24,'bbb')
+
+1 row created.
+SQL> /
+Enter value for id: 25
+Enter value for name: ccc
+old   1: insert into sample values(&id,'&name')
+new   1: insert into sample values(25,'ccc')
+
+1 row created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPARTMENT                     TABLE
+DEPARTMENT_MASTER              TABLE
+EMP                            TABLE
+EMPLOYEE                       TABLE
+SAMPLE                         TABLE
+STUDENT                        TABLE
+STUDENT_MARKS                  TABLE
+STUDENT_MASTER                 TABLE
+TESTDATE                       TABLE
+XYZ_MASTER                     TABLE
+
+10 rows selected.
+
+SQL> create table studentt(regno number(4) primary key,stuname varchar(20),sub1 number(3),sub2 number(3));
+
+Table created.
+
+SQL> select * from studentt;
+
+     REGNO STUNAME                    SUB1       SUB2
+---------- -------------------- ---------- ----------
+       101 mlk                          80         90
+
+SQL> select * from studentt;
+
+     REGNO STUNAME                    SUB1       SUB2
+---------- -------------------- ---------- ----------
+       101 mlk                          80         90
+       104 james gosling                80         60
