@@ -1,3 +1,7 @@
+//connecting jdk to sql
+//connecting jdk to sql/creating a table and inserting into it
+//to update student list in sql using jdk
+
 
 //connecting jdk to sql
 package jdbc;
@@ -129,3 +133,80 @@ SQL> select * from studentt;
 ---------- -------------------- ---------- ----------
        101 mlk                          80         90
        104 james gosling                80         60
+       
+       
+       
+//to update student list in sql using jdk
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleDriver;
+
+public class UpdateEx {
+
+	public static void main(String[] args) throws SQLException {
+		DriverManager.registerDriver(new OracleDriver());
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		Connection conn = DriverManager.getConnection(url,"neelima","daaji");
+		System.out.println("connected");
+		String qry  = "update studentt set sub1=?, sub2=? where regno=?";
+		PreparedStatement pst = conn.prepareStatement(qry);
+		pst.setInt(1, 98);
+		pst.setInt(2, 89);
+		pst.setInt(3, 104);
+		pst.executeUpdate();
+		System.out.println("updated");
+
+	}
+
+}
+
+//in sql after updating
+SQL> select * from studentt;
+
+     REGNO STUNAME                    SUB1       SUB2
+---------- -------------------- ---------- ----------
+       101 mlk                          80         90
+       104 james gosling                98         89
+
+
+//to get students list from sql using jdk
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import oracle.jdbc.OracleDriver;
+
+public class GetStudents {
+
+	public static void main(String[] args) throws SQLException {
+		DriverManager.registerDriver(new OracleDriver());
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		Connection conn = DriverManager.getConnection(url,"neelima","daaji");
+		System.out.println("connected");
+		String sql = "Select * from studentt";
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		for(int i=1;i<=rsmd.getColumnCount();i++)
+			System.out.print(rsmd.getColumnName(i)+" ");
+		System.out.println("\n---------------------------");	
+		while(rs.next())
+			System.out.println(rs.getInt(1)+" "+rs.getString("stuname")+
+					" "+rs.getInt(3)+" "+rs.getInt(4));
+
+	}
+
+}
+
+
+in output console table in sql will be printed
