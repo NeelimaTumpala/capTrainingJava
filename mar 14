@@ -255,3 +255,209 @@ public class GetStudents {
 
 
 in output console table in sql will be printed
+
+
+//
+package com.cg.students.applications;
+
+import com.cg.students.beans.Student;
+import com.cg.students.service.StudentService;
+import com.cg.students.service.StudentServiceImpl;
+
+public class AddStudent {
+	public static void main(String[] args) {
+		StudentService service = new StudentServiceImpl();
+		Student std = new Student(101,"mlk","cse",new Date(),800);
+		int rows = service.addStudent(std);
+		if(rows>0)
+			System.out.println("inserted");
+		else
+			System.out.println("not inserted");
+	}
+
+}
+
+
+//
+
+package com.cg.students.beans;
+
+import java.sql.Date;
+
+public class Student {
+	private int regno;
+	private String studentName;
+	private String branch;
+	private Date birthdate;
+	private int totalmarks;
+	public Student() {
+		
+	}
+	public Student(int regno, String studentName, String branch, Date birthdate, int totalmarks) {
+		super();
+		this.regno = regno;
+		this.studentName = studentName;
+		this.branch = branch;
+		this.birthdate = birthdate;
+		this.totalmarks = totalmarks;
+	}
+	public int getRegno() {
+		return regno;
+	}
+	public void setRegno(int regno) {
+		this.regno = regno;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public Date getBirthdate() {
+		return birthdate;
+	}
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+	public int getTotalmarks() {
+		return totalmarks;
+	}
+	public void setTotalmarks(int totalmarks) {
+		this.totalmarks = totalmarks;
+	}
+	
+}
+
+
+//
+
+package com.cg.students.dao;
+
+import com.cg.students.beans.Student;
+
+public interface StudentDao {
+	public int addStudent(Student std);
+}
+
+
+//
+
+package com.cg.students.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.cg.students.beans.Student;
+import com.cg.students.utils.DBConnection;
+import com.cg.students.utils.DBQueries;
+
+public class StudentDaoImpl implements StudentDao{
+	Connection conn =null;
+	PreparedStatement pst;
+	
+	@Override
+	public int addStudent(Student std) {
+		conn = DBConnection.getDBConnection();
+		int rows = 0;
+		try {
+			pst = conn.prepareStatement(DBQueries.addStudent);
+			pst.setInt(1,std.getRegno());
+			pst.setString(2, std.getStudentName());
+			pst.setString(3, std.getBranch());
+			//converting java.util.date to java.sql.Date
+			Date sqldate = new Date(std.getBirthdate().getTime());
+			pst.setDate(4, sqldate);
+			pst.setInt(5, std.getTotalMarks());
+			rows = pst.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rows;
+	}
+	
+}
+
+
+//
+
+package com.cg.students.service;
+
+import com.cg.students.beans.Student;
+
+public interface StudentService {
+	public int addStudent(Student std);
+
+}
+
+
+//
+
+package com.cg.students.service;
+
+import com.cg.students.beans.Student;
+import com.cg.students.dao.StudentDao;
+import com.cg.students.dao.StudentDaoImpl;
+
+public class StudentServiceImpl implements StudentService{
+	private StudentDao dao = new StudentDaoImpl();
+	@Override
+	public int addStudent(Student std) {
+		int rows = dao.addStudent(std);
+		
+		return rows;
+	}
+
+}
+
+
+//
+
+package com.cg.students.utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import oracle.jdbc.OracleDriver;
+
+public class DBConnection {
+	public static Connection conn = null;
+	public static Connection getDBConnection() {
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String username = "neelima";
+		String password = "daaji";
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			conn = DriverManager.getConnection(url,username,password);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+
+}
+
+
+//
+
+package com.cg.students.utils;
+
+public class DBQueries {
+	public static String addStudent = "insert into student values(?,?,?,?,?)";
+	
+}
