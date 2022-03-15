@@ -1,1 +1,127 @@
+//testing junit
+//Arithmetic->SampleTestCase
+package testing;
+
+public class Arithmetic {
+	public int add(int x,int y) {
+		return x+y;
+	}
+	public int subtract(int x,int y) {
+		return x-y;
+	}
+}
+
+//testing junit
+//Arithmetic->SampleTestCase
+package testing;
+
+
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+public class SampleTestCase {
+//these features will work in junit4
+	Arithmetic am = new Arithmetic();
+	
+	@Test
+	public void testAdd() {
+		Assert.assertEquals(8, am.add(5,3));
+	}
+	
+	@Test
+	public void testSubstract() {
+		Assert.assertEquals(10, am.subtract(20,10));
+	}
+	@Before
+	public void testBefore() {
+		System.out.println("** Before test **");
+	}
+	@After
+	public void testAfter() {
+		System.out.println("** After test **");
+	}
+	@BeforeClass
+	public static void testBeforeClass() {
+		System.out.println("** Before Class**");
+	}
+	@AfterClass
+	public static void testAfterClass() {
+		System.out.println("** After Class**");
+	}
+	@Test
+	@Ignore
+	public void testIgnored() {
+		Assert.assertEquals(9,am.add(5, 4));
+	}
+}
+
+
+//testing junit
+package testing;
+import org.junit.Test;
+import org.junit.Assert;
+
+//import junit.framework.Assert;
+public class JunitAssertions {
+	String obj1 = "capgemini";
+	String obj2 = "capgemini";
+	String obj5 = null;
+	int var1 = 15;
+	int var2 = 25;
+	int[] arithmetic1 = {10,20,30};
+	int[] arithmetic2 = {10,20,30};
+	@Test
+	public void testEquals() {
+		Assert.assertEquals("they are not equal",obj1,obj2);
+		
+	}
+	@Test
+	public void testNull() {
+		Assert.assertNull(obj5);
+	}
+	@Test
+	public void testTrue() {
+		Assert.assertTrue(var1<var2);
+	}
+	@Test
+	public void testArrayEquals() {
+		Assert.assertArrayEquals(arithmetic1, arithmetic2);
+	}
+}
+
+
+//testing junit
+
+package testing;
+import org.junit.Test;
+import org.junit.Assert;
+
+public class JunitAssertionTest {
+	@Test
+	public void test() {
+		String obj1="junit";
+		String obj2="junit";
+		String obj3="test";
+		String obj4="test";
+		String obj5=null;
+		int var1 = 1;
+		int var2 = 2;
+		int[] arithmetic1 = {1,2,3};
+		int[] arithmetic2 = {1,2,3};
+		Assert.assertEquals(obj1,obj2);
+		Assert.assertSame(obj3, obj4);
+		Assert.assertNotSame(obj2,obj4);
+		Assert.assertNotNull(obj1);
+		Assert.assertNull(obj5);
+		Assert.assertTrue(var1 < var2);
+		Assert.assertFalse(var1>var2);
+		Assert.assertArrayEquals(arithmetic1, arithmetic2);
+		
+	}
+}
 
