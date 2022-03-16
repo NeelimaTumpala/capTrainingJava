@@ -1,0 +1,48 @@
+//log4j
+//extract messages to a file
+
+//log4j.properties which creates a folder in given drive and display the messages
+//for this i have added log4j.jar library
+
+#Define the root logger with appender file
+log4j.rootLogger = ALL, FILE, CONSOLE
+
+#Define the console appender
+log4j.appender.CONSOLE = org.apache.log4j.ConsoleAppender
+
+#Log4j Layout
+#log4j.appender.CONSOLE.layout = org.apache.log4j.SimpleLayout
+log4j.appender.CONSOLE.layout  = org.apache.log4j.PatternLayout
+log4j.appender.CONSOLE.layout.conversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p - %m%n
+
+#Define the file appender
+log4j.appender.FILE=org.apache.log4j.FileAppender
+log4j.appender.FILE.File=D:\\cglogs\\cglogging
+#log4j.appender.FILE.layout = orgs.apache.log4j.SimpleLayout
+log4j.appender.FILE.layout = org.apache.log4j.PatternLayout
+log4j.appender.FILE.layout.conversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p - %m%n
+
+
+//Log4jMain
+
+package logs;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+public class Log4jMain {
+	public static Logger logger = Logger.getLogger(Log4jMain.class);
+
+	public static void main(String[] args) {
+		PropertyConfigurator.configure("resources/log4j.properties");
+		logger.setLevel(Level.ALL);
+		logger.debug("this is debug message");
+		logger.info("this is info message");
+		logger.warn("this is warm message");
+		logger.error("this is error message");
+		logger.fatal("this is fatal message");
+		
+
+	}
+
+}
