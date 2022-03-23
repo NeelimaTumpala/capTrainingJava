@@ -486,3 +486,165 @@ public class EmployeeMain {
 	}
 
 }
+
+//Employee->Parking->EmployeeMain
+package one2oneparking;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee")
+public class Employee {
+	@SequenceGenerator(name="id_seq",sequenceName="empseq")
+	@Id
+	@GeneratedValue(generator="id_seq")
+	private int empno;
+	@Column(length=20)
+	private String name;
+	@Column(length=20)
+	private String job;
+	public int getEmpno() {
+		return empno;
+	}
+	public void setEmpno(int empno) {
+		this.empno = empno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	Employee(){}
+	public Employee(int empno, String name, String job) {
+		super();
+		this.empno = empno;
+		this.name = name;
+		this.job = job;
+	}
+}
+
+
+//Employee->Parking->EmployeeMain
+
+
+
+package one2oneparking;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import one2oneparking.Employee;
+
+@Entity
+@Table(name="ParkingSlot")
+public class ParkingSlot {
+	@SequenceGenerator(name="id2_seq",sequenceName="ps_seq")
+	@Id
+	@GeneratedValue(generator="id2_seq")
+	private int id;
+	@Column(length=10)
+	private String slotno;
+	@Column(length=20)
+	private String floor;
+	@Column(length=20)
+	private String vehicleNo;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="empno")
+	
+	private Employee emp;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getSlotno() {
+		return slotno;
+	}
+
+	public void setSlotno(String slotno) {
+		this.slotno = slotno;
+	}
+
+	public String getFloor() {
+		return floor;
+	}
+
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+
+	public String getVehicleNo() {
+		return vehicleNo;
+	}
+
+	public void setVehicleNo(String vehicleNo) {
+		this.vehicleNo = vehicleNo;
+	}
+
+	public Employee getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
+	
+	ParkingSlot(){}
+	public ParkingSlot(int id, String slotno, String floor, String vehicleNo, Employee emp) {
+		super();
+		this.id = id;
+		this.slotno = slotno;
+		this.floor = floor;
+		this.vehicleNo = vehicleNo;
+		this.emp = emp;
+	}
+}
+
+package one2oneparking;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+public class EmployeeMain {
+	public static void main(String[] args) {
+		EntityManagerFactory factory =Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		
+		Employee emp = new Employee();
+		emp.setName("Navy");
+		emp.setJob("Analyst");
+		
+		ParkingSlot ps = new ParkingSlot();
+		ps.setSlotno("A10");
+		ps.setVehicleNo("AP O5 3026");
+		ps.setFloor("A");
+		ps.setEmp(emp);
+		
+		tran.begin();
+		manager.persist(ps);
+		tran.commit();
+		manager.close();
+		System.out.println("Inserted");
+	}
+}
