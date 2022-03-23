@@ -396,3 +396,93 @@ public class One2ManyGetData {
 
 }
 
+//springframe
+
+//Address->Employee->EmployeeMain
+package core;
+
+public class Address {
+	private String street;
+	private String city;
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+	
+}
+
+
+//Address->Employee->EmployeeMain
+package core;
+
+public class Employee {
+	private int code;
+	private String empname;
+	private double salary;
+	private Address address;
+	public Employee() {
+		
+	}
+	
+	public Employee(int code, String empname, double salary) {
+		
+		this.code = code;
+		this.empname = empname;
+		this.salary = salary;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+
+}
+
+//Address->Employee->EmployeeMain
+package core;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
+
+public class EmployeeMain {
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		Employee emp = ctx.getBean("emp",Employee.class);
+		/*emp.setCode(101);
+		emp.setEmpname("capgemini");
+		emp.setSalary(6000);*/
+		System.out.println(emp.getCode()+" "+emp.getEmpname()+" "+emp.getSalary()+" "
+		+emp.getAddress().getStreet()+" "+emp.getAddress().getCity());
+		
+	}
+
+}
