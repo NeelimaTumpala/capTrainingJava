@@ -1,0 +1,398 @@
+//in cg.project
+//projects regarding jpa
+//one to one relation type project
+
+//Person->Passport->One2one
+
+//Person
+package one2one;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "person")
+
+public class Person {
+	@SequenceGenerator(name = "id_seq",sequenceName = "person_seq")
+	@Id
+	@GeneratedValue(generator = "id_seq")
+	private int personId;
+	@Column(length = 30)
+	private String personName;
+	@Column(length = 30)
+	private String city;
+	public int getPersonId() {
+		return personId;
+	}
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+	public String getPersonName() {
+		return personName;
+	}
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+	
+
+}
+
+//Passport
+
+package one2one;
+
+
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "passport")
+public class Passport {
+	@Id
+	@Column(length = 10)
+	private String passportNo;
+	@Column(columnDefinition = "date")
+	private Date dateIssued;
+	@Column(columnDefinition = "date")
+	private Date expiryDate;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "personId")
+	private Person person;
+
+	public String getPassportNo() {
+		return passportNo;
+	}
+
+	public void setPassportNo(String passportNo) {
+		this.passportNo = passportNo;
+	}
+
+	public Date getDateIssued() {
+		return dateIssued;
+	}
+
+	public void setDateIssued(Date dateIssued) {
+		this.dateIssued = dateIssued;
+	}
+
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	
+	
+
+}
+
+
+//One2One
+
+package one2one;
+import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class One2OneMain {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		
+		Person person = new Person();
+		person.setPersonName("lilly");
+		person.setCity("HYD");
+		//person.setPassport(passport);
+		
+		Passport passport = new Passport();
+		passport.setPassportNo("G123456");
+		passport.setDateIssued(new Date());
+		passport.setExpiryDate(new Date());
+		passport.setPerson(person);
+		
+		tran.begin();
+		manager.persist(passport);
+		tran.commit();
+		manager.close();
+
+	}
+
+}
+
+//Person->Passport->One2one->One2OneGetData
+//to retrive data from sql table
+package one2one;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class One2OneGetData {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		
+		Query qry = manager.createQuery("from Person");
+		List<Person> personList = qry.getResultList();
+		for(Person p : personList)
+			System.out.println(p.getPersonId()+p.getPersonName()+p.getCity());
+		
+		Query qry2 = manager.createQuery("from Passport");
+		List<Passport> passportList = qry2.getResultList();
+		for(Passport p2 : passportList)
+			System.out.println(p2.getPassportNo()+p2.getPerson().getPersonName());
+		
+		
+		
+
+	}
+
+}
+
+
+package one2many;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+//Customer->Accoutn->One2ManyMain
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "customer")
+public class Customer {
+	@Id
+	private int custid;
+	@Column(length = 25)
+	private String name;
+	@Column(length = 25)
+	private String city;
+	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	List<Account> accounts;
+	public int getCustid() {
+		return custid;
+	}
+	public void setCustid(int custid) {
+		this.custid = custid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
+}
+
+
+//Customer->Accoutn->One2ManyMain
+package one2many;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "account")
+public class Account {
+	@Id
+	private int acno;
+	@Column(length = 10)
+	private String type;
+	@Column
+	private Double balance;
+	
+	@ManyToOne
+	@JoinColumn(name = "custid")
+	private Customer customer;
+
+	public int getAcno() {
+		return acno;
+	}
+
+	public void setAcno(int acno) {
+		this.acno = acno;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+	
+	
+}
+
+
+package one2many;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+//Customer->Accoutn->One2ManyMain
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class One2ManyMain {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		
+		Customer cust = new Customer();
+		cust.setCustid(101);
+		cust.setName("mlk");
+		cust.setCity("HYD");
+		
+		List<Account> accountList = new ArrayList<Account>();
+		Account acn1 = new Account();
+		acn1.setAcno(1101);
+		acn1.setType("savings");
+		acn1.setBalance(5000.0);
+		acn1.setCustomer(cust);
+		
+		Account acn2 = new Account();
+		acn2.setAcno(1004);
+		acn2.setType("savings");
+		acn2.setBalance(7000.0);
+		acn2.setCustomer(cust);
+		
+		Account acn3 = new Account();
+		acn3.setAcno(1006);
+		acn3.setType("savings");
+		acn3.setBalance(8000.0);
+		acn3.setCustomer(cust);
+		
+		accountList.add(acn1);
+		accountList.add(acn2);
+		accountList.add(acn3);
+		
+		cust.setAccounts(accountList);
+		
+		tran.begin();
+		manager.persist(cust);
+		tran.commit();
+		manager.close();
+		
+		
+		
+
+	}
+
+}
+
+
+//Customer->Accoutn->One2ManyMain->One2ManyGetData
+//to retrive the data from table
+package one2many;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class One2ManyGetData {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		
+		Query qry = manager.createQuery("from Customer");
+		List<Customer> customerList = qry.getResultList();
+		for(Customer p :customerList)
+			System.out.println(p.getCustid()+p.getName()+p.getCity());
+		
+		Query qry2 = manager.createQuery("from Account");
+		List<Account> accountList = qry2.getResultList();
+		for(Account p2 : accountList)
+			System.out.println(p2.getAcno()+p2.getType()+p2.getBalance()+p2.getCustomer());
+			
+
+	}
+
+}
+
