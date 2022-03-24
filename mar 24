@@ -1,0 +1,193 @@
+Note : it contains pom.xml file where we need to do some changes. This package also has sample.xml file where we need to mention nesessary changes.
+
+
+//spring based project
+
+//Student->Address->StudentMain
+package core;
+
+public class Student {
+	private int rno;
+	private String name;
+	private Address address;
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+
+}
+
+
+//Account->AccountConfiguration->ConfigurationMain
+//java based
+//call back methods
+package javabased;
+
+public class Account {
+	private int acno;
+	private String custname;
+	private double balance;
+	public void welcome() {
+		System.out.println("*** this is init method ***");
+	}
+	public void bye() {
+		System.out.println("*** this is destroy method ***");
+	}
+	public int getAcno() {
+		return acno;
+	}
+	public void setAcno(int acno) {
+		this.acno = acno;
+	}
+	public String getCustname() {
+		return custname;
+	}
+	public void setCustname(String custname) {
+		this.custname = custname;
+	}
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	
+
+}
+
+
+//Account->AccountConfiguration->ConfigurationMain
+//java based
+//call back methods
+package javabased;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AccountConfiguration {
+	@Bean(initMethod = "welcome", destroyMethod = "bye")
+	public Account getAccount() {
+		Account account = new Account();
+		account.setAcno(1234);
+		account.setCustname("mlk");
+		account.setBalance(60000);
+		return account;
+	}
+}
+
+
+//Account->AccountConfiguration->ConfigurationMain
+//java based
+//call back methods
+package javabased;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class CongigurationMain {
+
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext ctx =
+				new AnnotationConfigApplicationContext(AccountConfiguration.class);
+		Account act = ctx.getBean("getAccount",Account.class);
+		System.out.println(act.getAcno()+" "+act.getCustname());
+		ctx.close();//when we call this destroy methid will be executed
+	}
+
+}
+
+
+
+//spring boot example
+
+//pom.xml
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>sample</groupId>
+  <artifactId>spring-boot--sample</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.4.0</version>
+  </parent>
+  
+  <properties>
+  	<java.version>1.8</java.version>
+  	<maven-jar-plugin.version>3.2.1</maven-jar-plugin.version>
+   </properties>
+   
+    <dependencies>
+  	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
+//in resources application.properties
+
+server.port : 8081
+
+//HelloSpringBoot
+
+package sample;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HelloSpringBoot {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloSpringBoot.class, args);
+		
+	}
+
+}
+
+
+output: 
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.0)
+
+2022-03-24 16:03:27.016  INFO 21748 --- [           main] sample.HelloSpringBoot                   : Starting HelloSpringBoot using Java 15.0.1 on DESKTOP-OPDVSKN with PID 21748 (D:\eclipse\Capgemini\spring-boot--sample\target\classes started by WIN10 in D:\eclipse\Capgemini\spring-boot--sample)
+2022-03-24 16:03:27.025  INFO 21748 --- [           main] sample.HelloSpringBoot                   : No active profile set, falling back to default profiles: default
+2022-03-24 16:03:28.613  INFO 21748 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-03-24 16:03:28.636  INFO 21748 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-24 16:03:28.637  INFO 21748 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2022-03-24 16:03:28.794  INFO 21748 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-24 16:03:28.794  INFO 21748 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1614 ms
+2022-03-24 16:03:29.120  INFO 21748 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-03-24 16:03:29.471  INFO 21748 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-03-24 16:03:29.499  INFO 21748 --- [           main] sample.HelloSpringBoot                   : Started HelloSpringBoot in 3.287 seconds (JVM running for 4.128)
