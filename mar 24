@@ -1,3 +1,83 @@
+//annotations
+//Customer->PaySlip->CustomerMain
+package annotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component(value = "cust")
+public class Customer {
+	@Value("123")
+	private int code;
+	@Value("abcde")
+	private String custname;
+	@Autowired
+	private PaySlip slip;
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getCustname() {
+		return custname;
+	}
+	public void setCustname(String custname) {
+		this.custname = custname;
+	}
+	public PaySlip getSlip() {
+		return slip;
+	}
+	public void setSlip(PaySlip slip) {
+		this.slip = slip;
+	}
+	
+
+}
+
+
+
+//Customer->PaySlip->CustomerMain
+package annotations;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class PaySlip {
+	@Value("5000")
+	private int commission;
+
+	public int getCommission() {
+		return commission;
+	}
+
+	public void setCommission(int commission) {
+		this.commission = commission;
+	}
+	
+
+}
+
+
+//Customer->PaySlip->CustomerMain
+package annotations;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class CustomerMain {
+
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		Customer cust = ctx.getBean("cust",Customer.class);
+		System.out.println(cust.getCode()+" "+cust.getCustname()+" "+cust.getSlip().getCommission());
+		
+}
+}
+
+
 Note : it contains pom.xml file where we need to do some changes. This package also has sample.xml file where we need to mention nesessary changes.
 
 
