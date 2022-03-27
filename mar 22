@@ -1,0 +1,223 @@
+//@Sequence generator topiv covered
+//extracting data from sql and insering data into sql
+
+//Student->GetStudent->StudentMain
+package team;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "student")
+public class Student {
+	@Id
+	@Column(name = "regno", length = 10)
+	private int regno;
+	@Column(name = "stdname",length = 30)
+	private String stdname;
+	@Column(name = "branch",length = 10)
+	private String branch;
+	public Student() {
+		super();
+	}
+	public Student(int regno, String stdname, String branch) {
+		super();
+		this.regno = regno;
+		this.stdname = stdname;
+		this.branch = branch;
+	}
+	public int getRegno() {
+		return regno;
+	}
+	public void setRegno(int regno) {
+		this.regno = regno;
+	}
+	public String getStdname() {
+		return stdname;
+	}
+	public void setStdname(String stdname) {
+		this.stdname = stdname;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	
+}
+
+
+//Student->GetStudent->StudentMain
+package team;
+
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+public class GetStudents {
+public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		//Student std = manager.find(Student.class, 102);
+		//std.setBranch("MECH");
+		tran.begin();
+		//manager.persist(std);
+		//manager.remove(std);
+		tran.commit();
+		//System.out.println(std.getRegno()+std.getStdname()+std.getBranch());
+		Query qry = manager.createQuery("from Student");
+		List<Student> stdList = qry.getResultList();
+		for(Student s : stdList)
+			System.out.println(s.getRegno()+s.getStdname()+s.getBranch());
+		manager.close();
+		
+	}
+
+}
+
+
+
+//Student->GetStudent->StudentMain
+package team;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class StudentMain {
+	public static void main(String[] args) {
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		Student std = new Student(103, "mango", "CSE");
+		
+		tran.begin();
+		manager.persist(std);
+		tran.commit();
+		manager.close();
+		System.out.println("Inserted");
+	}
+}
+
+//Personn->PersonMain
+package team;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "person")
+
+@NamedQueries(@javax.persistence.NamedQuery(name = "getPersons",query = "select p from Person p"))
+public class Personn {
+	@SequenceGenerator(name="ed_seq",sequenceName="person_seq")
+	@Id
+	@GeneratedValue(generator="ed_seq")
+	private int ed;
+	@Column(length=40)
+	private String name;
+	@Column(length=30)
+	private String city;
+	
+	public int getEd() {
+		return ed;
+	}
+	public void setEd(int ed) {
+		this.ed = ed;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+}
+
+
+//Personn->PersonMain
+package team;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class PersonMain {
+	public static void main(String[] srgs) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		tran.begin();
+		Personn p=new Personn();
+		p.setName("abb");
+		p.setCity("hyb");
+		manager.persist(p);
+		tran.commit();
+		manager.close();
+}
+}
+
+
+//Personn->JpaQueries
+package team;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import one2one.Person;
+
+public class JpaQueries {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CG_PU");
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction tran = manager.getTransaction();
+		//to get object using pk
+		Personn p1=manager.find(Personn.class, 1002);
+		System.out.println(p1.getEd()+p1.getName()+p1.getCity());
+		//to get list of objects from database -> Query lang
+		Query qry = manager.createQuery("from Person");
+		List<Personn> personList = qry.getResultList();
+		personList.forEach((p)->System.out.println(p.getEd()+p.getName()+p.getCity()));
+		
+		//
+		Query qry1 = manager.createQuery("from Person p where p.id>?1");
+		qry.setParameter(1, 1002);
+		List<Personn> list2 = qry1.getResultList();
+		for(Personn p2:list2)
+			System.out.println(p2.getEd()+p2.getName()+p2.getCity());
+		System.out.println("using named queries");
+		
+		Query qry2 = manager.createNativeQuery("getPersons");
+		List<Personn> list3 = qry2.getResultList();
+		for(Personn p3:list3)
+			System.out.println(p3.getEd()+p3.getName()+p3.getCity());
+	}
+
+}
