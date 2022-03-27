@@ -1,0 +1,184 @@
+//spring boot
+
+//HelloSpringBoot->HelloController->HelloSwagger
+package sample;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HelloSpringBoot {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HelloSpringBoot.class, args);
+		
+	}
+
+}
+
+//HelloSpringBoot->HelloController->HelloSwagger
+package sample;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class HelloSwagger {
+	@Bean
+	public Docket displayApi() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("sample")).build();
+	}
+
+}
+
+//HelloSpringBoot->HelloController->HelloSwagger
+package sample;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+	@RequestMapping("/hello")
+	public String welcome() {
+		return "Welcome to Spring Boot MVC";
+	}
+	@GetMapping("/get")
+	public String getEmployees() {
+		return "Employee details ";
+	}
+	@PostMapping("/add")
+	public String addEmployee() {
+		return "emplpoyee inserted...";
+	}
+	@PutMapping("/edit")
+	public String updateEmployee() {
+		return "employee details updated...";
+	}
+	@DeleteMapping("/del")
+	public String deleteEmployee() {
+		return "employee deleted";
+	}
+	
+}
+
+
+//HelloSpringBoot->Employee->EmployeeService->EmployeeController
+//run HelloSpringBoot
+package sample;
+
+public class Employee {
+	private int code;
+	private String name;
+	private double salary;
+	
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	
+}
+
+
+//HelloSpringBoot->Employee->EmployeeService->EmployeeController
+//run HelloSpringBoot
+package sample;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class EmployeeService {
+	List<Employee> emplist = new ArrayList<Employee>();
+	
+	public void addEmployee(Employee emp) {
+		emplist.add(emp);
+	}
+	
+	public List<Employee> getEmpls(){
+		return emplist;
+	}
+	
+	
+	
+	
+	
+}
+
+
+//HelloSpringBoot->Employee->EmployeeService->EmployeeController
+//run HelloSpringBoot
+package sample;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/empls")
+public class EmployeeController {
+	@Autowired
+	EmployeeService service;
+	
+	@PostMapping
+	public String addEmployee(@RequestBody Employee emp) {
+		service.addEmployee(emp);
+		return "employee details added";
+	}
+	@GetMapping
+	public List<Employee> getEmployee(){
+		List<Employee> emplist = service.getEmpls();
+		return emplist;
+	}
+	/*
+	@GetMapping("/{code}")
+	public String getEmployeeByCode(@PathVariable int code) {
+		Employee e=service.getEmplById(code);
+		return "employee code = " +code;
+ 	}
+	
+	@GetMapping
+	public List<Employee> updateEmployee(@PathVariable int code) {
+		List<Employee> li=service.update(code);
+		return li;
+	}
+	@DeleteMapping("/{code}")
+	public List<Employee> deleteEmployee(@PathVariable int code) {
+		List<Employee> list=service.delete(code);
+		return list;
+	}*/
+
+}
