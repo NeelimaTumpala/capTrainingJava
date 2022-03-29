@@ -1,3 +1,6 @@
+
+
+-------------1--------------
 //pom.xml
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -316,3 +319,224 @@ public class ItemSwaggerApi {
 				.apis(RequestHandlerSelectors.basePackage("jpa")).build();
 	}
 }
+
+
+------2----------
+
+//updated ItemServiceImpl
+
+
+package jpa.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jpa.dao.ItemDao;
+import jpa.entity.Item;
+@Service
+public class ItemServiceImpl implements ItemService{
+
+	@Autowired
+	ItemDao dao;
+	@Override
+	public void addItem(Item item) {
+		dao.save(item);
+		
+	}
+
+	@Override
+	public void updateItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteItem(int itemCode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Item> getItems() {
+		return dao.findAll();
+	}
+
+}
+
+
+//updated ItemController
+
+package jpa.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jpa.entity.Item;
+import jpa.service.ItemService;
+
+@RestController
+@RequestMapping("/item")
+public class ItemController {
+	
+	@Autowired
+	ItemService service;
+	
+	@PostMapping
+	public ResponseEntity<String> addItem(@RequestBody Item item) {
+		service.addItem(item);
+		return new ResponseEntity<String>("Item added...",HttpStatus.OK);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Item>> getItems(){
+		List<Item> itemList = service.getItems();
+		return new ResponseEntity<List<Item>>(itemList,HttpStatus.OK);
+	}
+	
+
+}
+
+
+----------3-------------
+
+//Optinal is used in order to overcome exception if some thing is not found
+
+
+//get by id using optinal below changes have to be made in code
+
+//ItemService
+
+package jpa.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import jpa.entity.Item;
+public interface ItemService {
+	void addItem(Item item);
+	void updateItem(Item item);
+	void deleteItem(int itemCode);
+	List<Item> getItems();
+	Optional<Item> getItemById(int itemcode);
+
+}
+
+
+
+
+//ItemServiceImpl
+
+package jpa.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jpa.dao.ItemDao;
+import jpa.entity.Item;
+@Service
+public class ItemServiceImpl implements ItemService{
+
+	@Autowired
+	ItemDao dao;
+	@Override
+	public void addItem(Item item) {
+		dao.save(item);
+		
+	}
+
+	@Override
+	public void updateItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteItem(int itemCode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Item> getItems() {
+		return dao.findAll();
+	}
+
+	@Override
+	public Optional<Item> getItemById(int itemcode) {
+		Optional<Item> item = dao.findById(itemcode);
+		return item;
+	}
+
+}
+
+
+
+//ItemController
+
+
+package jpa.controller;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jpa.entity.Item;
+import jpa.service.ItemService;
+
+@RestController
+@RequestMapping("/item")
+public class ItemController {
+	
+	@Autowired
+	ItemService service;
+	
+	@PostMapping
+	public ResponseEntity<String> addItem(@RequestBody Item item) {
+		service.addItem(item);
+		return new ResponseEntity<String>("Item added...",HttpStatus.OK);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Item>> getItems(){
+		List<Item> itemList = service.getItems();
+		return new ResponseEntity<List<Item>>(itemList,HttpStatus.OK);
+	}
+	
+	@GetMapping("{code}")
+	public ResponseEntity<Optional<Item>> getItemByCode(@PathVariable int code){
+		Optional<Item> item = service.getItemById(code);
+		return new ResponseEntity<Optional<Item>>(item,HttpStatus.OK);
+	}
+	
+
+}
+
+
+
+
+
+
